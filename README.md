@@ -2,7 +2,7 @@
 
 ### This game is a simple Python game.
 
-![game](go.png)
+![game](go.png)  
 When a user caught by a red turtle, user dies.
 If you catch a green ball, user score increase.
 
