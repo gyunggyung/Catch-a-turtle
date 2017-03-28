@@ -102,6 +102,7 @@ def play():
 		message("You are caught.", text, "if you want to do it again, pressthe space key")
 		playing = False
 		score = 0
+		booster = 0
 		t.onkeypress(start, "space")
 	if playing :
 		t.ontimer(play, 100)
