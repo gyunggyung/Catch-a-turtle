@@ -3,6 +3,8 @@ import random
 
 score = 0
 playing = False
+counter = 0
+shadow = False
 
 def create_turtle(name, color,x,y,role):
 	global test
@@ -23,6 +25,9 @@ create_turtle(ta2,"red",100,200,0)
 
 ts = t.Turtle()
 create_turtle(ts,"green",0,-200,1)
+
+sh = t.Turtle()
+create_turtle(sh,"blue",100,-200,1)
 
 def turn_right():
 	t.setheading(0)
@@ -45,6 +50,8 @@ def start():
 
 def atta(atk):
 	global score
+	global counter
+	global shadow
 	if random.randint(1, 5) == 2:
 		ang = atk.towards(t.pos())
 		atk.setheading(ang)
@@ -60,13 +67,27 @@ def atta(atk):
 		star_x = random.randint(-230, 230)
 		star_y = random.randint(-230, 230)
 		ts.goto(star_x, star_y)
+		shadow = False
+
+	if t.distance(sh) <12:
+		score = score + 1
+		star_x = random.randint(-230, 230)
+		star_y = random.randint(-230, 230)
+		sh.goto(star_x, star_y)
+		shadow = True
 
 def play():
 	global playing
 	global score
+	global shadow
 	t.forward(10)
 	atta(ta)
 	atta(ta2)
+	if shadow :
+		t.bgcolor("red")
+	else:
+		t.bgcolor("purple")
+
 	if t.distance(ta) <= 12 or t.distance(ta2) <= 12:
 		text = "Score : "+str(score)
 		message("You are caught.", text, "if you want to do it again, pressthe space key")
