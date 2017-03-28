@@ -5,6 +5,7 @@ score = 0
 playing = False
 counter = 0
 shadow = False
+booster = 1
 
 def create_turtle(name, color,x,y,role):
 	global test
@@ -41,6 +42,12 @@ def turn_left():
 def turn_down():
 	t.setheading(270)
 
+def boost():
+	global booster
+	if booster > 0:
+		t.forward(100)
+		booster = booster - 1
+
 def start():
 	global playing
 	if playing == False:
@@ -52,15 +59,15 @@ def atta(atk):
 	global score
 	global counter
 	global shadow
+	global booster
 	if random.randint(1, 5) == 2:
 		ang = atk.towards(t.pos())
 		atk.setheading(ang)
 	speed = score + 5
-
 	if speed > 15:
 		speed = 15
 	atk.forward(speed)
-	
+
 	if t.distance(ts) < 12:
 		score = score + 1
 		t.write(score)
@@ -68,6 +75,7 @@ def atta(atk):
 		star_y = random.randint(-230, 230)
 		ts.goto(star_x, star_y)
 		shadow = False
+		booster=booster + 1
 
 	if t.distance(sh) <12:
 		score = score + 1
@@ -75,11 +83,13 @@ def atta(atk):
 		star_y = random.randint(-230, 230)
 		sh.goto(star_x, star_y)
 		shadow = True
+		booster= booster + 1
 
 def play():
 	global playing
 	global score
 	global shadow
+	global booster
 	t.forward(10)
 	atta(ta)
 	atta(ta2)
@@ -87,7 +97,6 @@ def play():
 		t.bgcolor("red")
 	else:
 		t.bgcolor("purple")
-
 	if t.distance(ta) <= 12 or t.distance(ta2) <= 12:
 		text = "Score : "+str(score)
 		message("You are caught.", text, "if you want to do it again, pressthe space key")
@@ -117,5 +126,6 @@ t.onkeypress(turn_up, 	"Up")
 t.onkeypress(turn_left,	"Left")
 t.onkeypress(turn_down,	"Down")
 t.onkeypress(start, "space")
+t.onkeypress(boost, "b")
 t.listen()
 t.mainloop()
